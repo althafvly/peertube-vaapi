@@ -1,6 +1,8 @@
 ARG VERSION=production
 FROM chocobozzz/peertube:${VERSION}-trixie
 
+ARG VAAPI_DRIVER=intel-media-va-driver-non-free
+
 # Enable non-free repos (Intel VAAPI)
 RUN set -eux; \
     echo "deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware" > /etc/apt/sources.list; \
@@ -16,7 +18,7 @@ RUN set -eux; \
         wget \
         libva-dev \
         vainfo \
-        intel-media-va-driver-non-free \
+        ${VAAPI_DRIVER} \
         libvpl2 \
         libvpl-tools \
         libvpl-dev; \
@@ -34,4 +36,3 @@ RUN sed -i \
         chmod 777 /dev/dri/renderD128\n\
     fi' \
     /usr/local/bin/entrypoint.sh
-

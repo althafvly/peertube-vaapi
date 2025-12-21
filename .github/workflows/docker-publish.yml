@@ -24,10 +24,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      # -------- iHD (modern Intel) --------
+      - name: Build iHD VAAPI image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/peertube-plugin-hardware-transcode-vaapi:latest .
+          docker build \
+            -t ghcr.io/${{ github.repository_owner }}/peertube-vaapi:production-trixie-ihd .
 
-      - name: Push Docker image
+      - name: Push iHD VAAPI image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/peertube-plugin-hardware-transcode-vaapi:latest
+          docker push ghcr.io/${{ github.repository_owner }}/peertube-vaapi:production-trixie-ihd
+
+      # -------- i965 (Intel CPU (generation 7 and older)) --------
+      - name: Build i965 VAAPI image
+        run: |
+          docker build \
+            --build-arg VAAPI_DRIVER=i965-va-driver-shaders \
+            -t ghcr.io/${{ github.repository_owner }}/peertube-vaapi:production-trixie-i965 .
+
+      - name: Push i965 VAAPI image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/peertube-vaapi:production-trixie-i965
