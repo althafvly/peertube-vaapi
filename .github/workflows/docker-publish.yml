@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+  schedule:
+    # Runs once every 7 days (Sunday at 03:00 UTC)
+    - cron: '0 3 * * 0'
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
