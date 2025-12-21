@@ -13,16 +13,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (LTS)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Configure npm authentication
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build plugin
         run: npm run build
+
+      - name: Publish to npm
+        run: npm publish --access public
 
       - name: Prepare release artifact
         run: |
