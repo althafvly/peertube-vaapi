@@ -42,3 +42,24 @@ grep "$(ls -l /dev/dri/renderD128 | awk '{print($4)}')" /etc/group | cut -d':' -
       # VAAPI Devices
       - /dev/dri:/dev/dri
 ```
+---
+
+## Installing the PeerTube VAAPI plugin
+
+The Docker image only provides the **system-level VAAPI dependencies**.
+The actual hardware-accelerated transcoding profiles are provided by a PeerTube plugin and must be installed **manually from the PeerTube admin interface**.
+
+### Steps
+
+1. Log in to PeerTube as an **Administrator**
+2. Go to **Settings**
+3. Open **Plugins/Themes**
+4. Switch to the **Search Plugins** tab
+5. Search for:
+
+   ```
+   ffmpeg-vaapi
+   ```
+
+6. Click **Install**
+7. Enable the plugin after installation in **Installed Plugins**
